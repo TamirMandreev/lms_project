@@ -11,6 +11,9 @@ class Course(models.Model):
         verbose_name = 'Курс'
         verbose_name_plural = 'Курсы'
 
+    def __str__(self):
+        return self.name
+
 
 class Lesson(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название урока", help_text='Укажите название урока')
@@ -20,3 +23,10 @@ class Lesson(models.Model):
                                 help_text='Загрузите превью')
     link_to_video = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка на видео', help_text='Укажите ссылку на видео')
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, blank=True, null=True, related_name='lessons',)
+
+    class Meta:
+        verbose_name = 'Урок'
+        verbose_name_plural = 'Уроки'
+
+    def __str__(self):
+        return self.name
