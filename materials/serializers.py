@@ -27,7 +27,7 @@ class CourseSerializer(ModelSerializer):
 
     def get_is_subscribed(self, course):
         '''
-        Определяет, подписан ли текущий пользователь на курс.
+        Возвращает True, если текущий пользователь подписан на курс, иначе False.
         '''
         current_user = self.context['request'].user
         try:

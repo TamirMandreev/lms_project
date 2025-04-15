@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from materials.models import Lesson, Course
+from materials.models import Lesson, Course, Subscribe
 from users.models import User
 
 
@@ -73,4 +73,28 @@ class LessonTestCase(APITestCase):
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Lesson.objects.count(), 0)
+
+
+class SubscribeTestCase(APITestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(email='test@example.com')
+        self.course = Course.objects.create(name='Test Course', description='Test Course', owner=self.user)
+        self.client.force_authenticate(user=self.user)
+
+    def test_subscribe_true(self):
+        url = reverse('materials:subscribe')
+        data = {'course_id': self.course.pk}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['Сообщение'], 'Подписка добавлена')
+
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.data['Сообщение'], 'Подписка удалена')
+
+
+
+
+
+
 
