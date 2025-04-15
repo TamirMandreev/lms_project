@@ -2,9 +2,12 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from materials.models import Course, Lesson
+from materials.validators import url_validator
 
 
 class LessonSerializer(ModelSerializer):
+    validators = [url_validator]
+
     class Meta:
         model = Lesson
         fields = '__all__'
