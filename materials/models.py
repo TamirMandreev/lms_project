@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import SET_NULL
 
 
+
 # Create your models here.
 
 
@@ -37,4 +38,9 @@ class Lesson(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Subscribe(models.Model):
+    user = models.ForeignKey('users.User', on_delete=SET_NULL, blank=True, null=True, verbose_name='Пользователь', related_name='subscriptions')
+    course = models.ForeignKey(Course, on_delete=SET_NULL, blank=True, null=True, verbose_name='Курс', related_name='subscribed_courses')
 
