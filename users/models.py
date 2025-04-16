@@ -38,7 +38,7 @@ class Payment(models.Model):
         (BANK_TRANSFER, 'Банковский перевод')
     ]
 
-    user = models.ForeignKey(User, on_delete=CASCADE, related_name='payments', blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=CASCADE, related_name='payments', blank=True, null=True, verbose_name='Пользователь', help_text='Укажите пользователя')
     # Дата оплаты
     # auto_now_add используется для автоматического заполнения поля значением
     # текущей даты и времени при создании записи
@@ -48,3 +48,17 @@ class Payment(models.Model):
     paid_lesson = models.ForeignKey(Lesson, on_delete=CASCADE, related_name='payments', null=True, blank=True, verbose_name='Оплаченный урок')
     # Метод оплаты
     payment_method = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name='Способ оплаты', help_text='Выберите способ оплаты')
+
+    # Сумма платежа
+    amount = models.PositiveIntegerField(verbose_name='Сумма платежа', help_text='Укажите сумму платежа')
+    # Id сессии
+    session_id = models.CharField(max_length=255, blank=True, null=True, verbose_name='Id сессии', help_text='Укажите id сессии')
+    # Ссылка на оплату
+    link = models.URLField(max_length=400, blank=True, null=True, verbose_name='Ссылка на оплату', help_text='Укажите ссылку на оплату')
+
+    class Meta:
+        verbose_name = 'Платеж'
+        verbose_name_plural = 'Платежи'
+
+    def __str__(self):
+        return self.amount
