@@ -12,16 +12,25 @@ app_name = MaterialsConfig.name
 
 # Создать экземпляр роутера
 router = SimpleRouter()
-router.register('courses', CourseViewSet, basename='courses')
+router.register("courses", CourseViewSet, basename="courses")
 
 urlpatterns = [
-    path('lessons/', views.LessonListAPIView.as_view(), name='lesson-list'),
-    path('lessons/<int:pk>/', views.LessonRetrieveAPIView.as_view(), name='lesson-detail'),
-    path('lessons/create/', views.LessonCreateAPIView.as_view(), name='lesson-create'),
-    path('lessons/update/<int:pk>/', views.LessonUpdateAPIView.as_view(), name='lesson-update'),
-    path('lessons/delete/<int:pk>/', views.LessonDestroyAPIView.as_view(), name='lesson-delete'),
-
-    path('subscribe/', views.SubscribeAPIView.as_view(), name='subscribe'),
+    path("lessons/", views.LessonListAPIView.as_view(), name="lesson-list"),
+    path(
+        "lessons/<int:pk>/", views.LessonRetrieveAPIView.as_view(), name="lesson-detail"
+    ),
+    path("lessons/create/", views.LessonCreateAPIView.as_view(), name="lesson-create"),
+    path(
+        "lessons/update/<int:pk>/",
+        views.LessonUpdateAPIView.as_view(),
+        name="lesson-update",
+    ),
+    path(
+        "lessons/delete/<int:pk>/",
+        views.LessonDestroyAPIView.as_view(),
+        name="lesson-delete",
+    ),
+    path("subscribe/", views.SubscribeAPIView.as_view(), name="subscribe"),
 ]
 
 urlpatterns += router.urls

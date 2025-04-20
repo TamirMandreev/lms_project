@@ -10,7 +10,7 @@ class LessonSerializer(ModelSerializer):
 
     class Meta:
         model = Lesson
-        fields = '__all__'
+        fields = "__all__"
 
 
 class CourseSerializer(ModelSerializer):
@@ -20,16 +20,16 @@ class CourseSerializer(ModelSerializer):
 
     class Meta:
         model = Course
-        fields = '__all__'
+        fields = "__all__"
 
     def get_count_lessons(self, course):
         return Lesson.objects.filter(course=course).count()
 
     def get_is_subscribed(self, course):
-        '''
+        """
         Возвращает True, если текущий пользователь подписан на курс, иначе False.
-        '''
-        current_user = self.context['request'].user
+        """
+        current_user = self.context["request"].user
         try:
             subscribe = Subscribe.objects.get(user=current_user, course=course)
             return True
@@ -41,7 +41,4 @@ class SubscribeSerializer(ModelSerializer):
 
     class Meta:
         model = Subscribe
-        fields = '__all__'
-
-
-
+        fields = "__all__"

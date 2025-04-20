@@ -1,17 +1,20 @@
 from rest_framework import viewsets
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView,
+                                     UpdateAPIView)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from materials.models import Course, Lesson, Subscribe
 from materials.paginators import CustomPaginator
-from materials.serializers import CourseSerializer, LessonSerializer, SubscribeSerializer
+from materials.serializers import (CourseSerializer, LessonSerializer,
+                                   SubscribeSerializer)
 from materials.tasks import send_information_about_update_course
 from users.permissions import IsModerator, IsOwner
 
-
 # Create your views here.
+
 
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
@@ -19,11 +22,11 @@ class CourseViewSet(viewsets.ModelViewSet):
     pagination_class = CustomPaginator
 
     def get_permissions(self):
-        if self.action in ['list', 'retrieve', 'update', 'partial_update']:
+        if self.action in ["list", "retrieve", "update", "partial_update"]:
             self.permission_classes = [IsAuthenticated, IsModerator | IsOwner]
-        elif self.action in ['create']:
+        elif self.action in ["create"]:
             self.permission_classes = [IsAuthenticated, ~IsModerator]
-        elif self.action == 'destroy':
+        elif self.action == "destroy":
             self.permission_classes = [IsAuthenticated, ~IsModerator | IsOwner]
 
         return super().get_permissions()
@@ -34,9 +37,9 @@ class CourseViewSet(viewsets.ModelViewSet):
         course.save()
 
     def perform_update(self, serializer):
-        '''
+        """
         Сохраняет изменения в объекте и отправляет уведомления подписчикам о произошедшем обновлении.
-        '''
+        """
         # Сохраняем объект с новыми данными
         serializer.save()
         # Получить pk обновляемого объекта
@@ -52,11 +55,6 @@ class CourseViewSet(viewsets.ModelViewSet):
                 email_list.append(email)
         # Отправить уведомления об обновлении курса на все email-адреса
         send_information_about_update_course(email_list, updated_course.name)
-
-
-
-
-
 
 
 # Представления на основе Generics
@@ -99,18 +97,15 @@ class SubscribeAPIView(APIView):
 
     def post(self, request):
         user = self.request.user
-        course_id = self.request.data.get('course_id')
+        course_id = self.request.data.get("course_id")
         course_item = Course.objects.get(id=course_id)
 
         subscribe_item = Subscribe.objects.filter(user=user, course=course_item)
 
         if subscribe_item.exists():
             subscribe_item.delete()
-            message = 'Подписка удалена'
+            message = "Подписка удалена"
         else:
             Subscribe.objects.create(user=user, course=course_item)
-            message = 'Подписка добавлена'
-        return Response({'Сообщение': message})
-
-
-
+            message = "Подписка добавлена"
+        return Response({"Сообщение": message})
