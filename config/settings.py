@@ -168,7 +168,12 @@ CELERY_RESULT_BACKEND = os.getenv("CELERY_BROKER_URL")
 
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
-CELERY_BEAT_SCHEDULE = {}  # Настроить для выполнения регулярных задач
+CELERY_BEAT_SCHEDULE = {
+    'block_inactive_users': {
+        'task': 'users.tasks.block_inactive_users',
+        'schedule': timedelta(days=30),
+    }
+}
 
 # Настройки для работы с почтой
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
