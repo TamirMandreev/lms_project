@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from materials.models import Course, Lesson, Subscribe
 from materials.paginators import CustomPaginator
 from materials.serializers import CourseSerializer, LessonSerializer, SubscribeSerializer
+from materials.tasks import send_information_about_update_course
 from users.permissions import IsModerator, IsOwner
 
 
@@ -31,6 +32,31 @@ class CourseViewSet(viewsets.ModelViewSet):
         course = serializer.save()
         course.owner = self.request.user
         course.save()
+
+    def perform_update(self, serializer):
+        '''
+        Сохраняет изменения в объекте и отправляет уведомления подписчикам о произошедшем обновлении.
+        '''
+        # Сохраняем объект с новыми данными
+        serializer.save()
+        # Получить pk обновляемого объекта
+        updated_course = serializer.instance
+        # Получить подписки, связанные с обновляемым курсом
+        subscribes = updated_course.subscribed_courses.all()
+        # Создать переменную для хранения email-адресов пользователей, у которых есть подписка на курс
+        email_list = []
+        # Добавить email-адреса
+        for subscribe in subscribes:
+            if subscribe.user.email:
+                email = subscribe.user.email
+                email_list.append(email)
+        # Отправить уведомления об обновлении курса на все email-адреса
+        send_information_about_update_course(email_list, updated_course.name)
+
+
+
+
+
 
 
 # Представления на основе Generics
@@ -82,7 +108,7 @@ class SubscribeAPIView(APIView):
             subscribe_item.delete()
             message = 'Подписка удалена'
         else:
-            subscribe_item = Subscribe.objects.create(user=user, course=course_item)
+            Subscribe.objects.create(user=user, course=course_item)
             message = 'Подписка добавлена'
         return Response({'Сообщение': message})
 
