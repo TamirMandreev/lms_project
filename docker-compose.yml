@@ -2,10 +2,8 @@ services:
   postgres:
     image: postgres:latest
     container_name: postgres
-    environment:
-      POSTGRES_USER: tamir
-      POSTGRES_PASSWORD: 14032712
-      POSTGRES_DB: lms_project
+    env_file:
+      - .env
     ports:
       - "5432:5432"
     volumes:
@@ -15,8 +13,6 @@ services:
     build: .
     ports:
       - "8000:8000"
-    environment:
-      HOST: postgres
     env_file:
       - .env
     depends_on:
@@ -32,10 +28,6 @@ services:
   celery:
     build: .
     command: celery -A config worker --loglevel=info
-    environment:
-      CELERY_BROKER_URL: redis://redis:6379/0
-      CELERY_RESULT_BACKEND: redis://redis:6379/0
-      HOST: postgres
     env_file:
       - .env
     depends_on:
@@ -45,10 +37,6 @@ services:
   celery-beat:
     build: .
     command: celery -A config beat --loglevel=info
-    environment:
-      CELERY_BROKER_URL: redis://redis:6379/0
-      CELERY_RESULT_BACKEND: redis://redis:6379/0
-      HOST: postgres
     env_file:
       - .env
     depends_on:
