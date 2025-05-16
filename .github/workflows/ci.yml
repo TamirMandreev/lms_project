@@ -3,7 +3,27 @@ name: Django CI
 on: [push, pull_request]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install flake8
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install flake8
+
+      - name: Run flake8
+        run: flake8 .
+
   test:
+    needs: lint
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +57,7 @@ jobs:
         run: echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/lms_project:${{ github.sha }}\
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/lms_project:${{ github.sha }} .
 
       - name: Push Docker image in DockerHub
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/lms_project:${{ github.sha }}
@@ -59,6 +79,7 @@ jobs:
           sudo systemctl start docker || true
           sudo chown root:docker /var/run/docker.sock || true
           sudo chmod 660 /var/run/docker.sock || true
+          
           newgrp docker || true
           
           docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/lms_project:${{ github.sha }}

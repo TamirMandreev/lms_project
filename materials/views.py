@@ -1,15 +1,22 @@
 from rest_framework import viewsets
-from rest_framework.generics import (CreateAPIView, DestroyAPIView,
-                                     ListAPIView, RetrieveAPIView,
-                                     UpdateAPIView)
+from rest_framework.generics import (
+    CreateAPIView,
+    DestroyAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from materials.models import Course, Lesson, Subscribe
 from materials.paginators import CustomPaginator
-from materials.serializers import (CourseSerializer, LessonSerializer,
-                                   SubscribeSerializer)
+from materials.serializers import (
+    CourseSerializer,
+    LessonSerializer,
+    SubscribeSerializer,
+)
 from materials.tasks import send_information_about_update_course
 from users.permissions import IsModerator, IsOwner
 
@@ -46,7 +53,6 @@ class CourseViewSet(viewsets.ModelViewSet):
         updated_course_pk = serializer.instance.pk
         # Отправить уведомления об обновлении курса на все email-адреса
         send_information_about_update_course.delay(updated_course_pk)
-
 
 
 # Представления на основе Generics

@@ -1,4 +1,5 @@
 from django.urls import path
+
 # SimpleRouter автоматически создает маршруты для стандартных
 # CRUD операций (GET, POST, PATCH, DELETE),
 # основываясь на представлении, переданном ему
