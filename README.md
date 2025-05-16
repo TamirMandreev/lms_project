@@ -9,3 +9,10 @@
 2. Скопируйте файл .env.example в .env и заполните требуемые значения
 
 3. Запустите проект командой "docker compose up -d --build"
+
+## Деплой на сервер 
+1. Войдите на сервер 
+2. Скопируйте проект командой git clone https://github.com/TamirMandreev/lms_project.git
+3. Создайте файл .env и заполните требуемые значения, опираясь на файд .env.example
+4. Запустите контейнеры в режиме демона: sudo docker compose up -d
+5. Проверьте работу контейнеров: sudo docker compose ps
