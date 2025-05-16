@@ -31,7 +31,7 @@ class CourseSerializer(ModelSerializer):
         """
         current_user = self.context["request"].user
         try:
-            subscribe = Subscribe.objects.get(user=current_user, course=course)
+            Subscribe.objects.get(user=current_user, course=course)
             return True
         except Subscribe.DoesNotExist:
             return False

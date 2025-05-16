@@ -1,12 +1,8 @@
-from datetime import timedelta
-
 from celery import shared_task
 from django.core.mail import send_mail
-from django.utils.timezone import now
 
 from config.settings import EMAIL_HOST_USER
 from materials.models import Course
-from users.models import User
 
 
 # Декоратор shared_task используется для обозначения функции как задачи,
@@ -18,7 +14,7 @@ def send_information_about_update_course(pk):
     # Получить подписки, связанные с обновляемым курсом
     subscriptions = updated_course.subscribed_courses.all()
     # Непонятное действие
-    email_list = list(subscriptions.values_list('user__email', flat=True))
+    email_list = list(subscriptions.values_list("user__email", flat=True))
     """Отправляет сообщение пользователям об обновлении курса"""
     send_mail(
         f"Обновление курса {updated_course.name}",

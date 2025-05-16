@@ -468,6 +468,24 @@ files = [
 Django = ">=4.2"
 
 [[package]]
+name = "django-redis"
+version = "5.4.0"
+description = "Full featured redis cache backend for Django."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "django-redis-5.4.0.tar.gz", hash = "sha256:6a02abaa34b0fea8bf9b707d2c363ab6adc7409950b2db93602e6cb292818c42"},
+    {file = "django_redis-5.4.0-py3-none-any.whl", hash = "sha256:ebc88df7da810732e2af9987f7f426c96204bf89319df4c6da6ca9a2942edd5b"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+redis = ">=3,<4.0.0 || >4.0.0,<4.0.1 || >4.0.1"
+
+[package.extras]
+hiredis = ["redis[hiredis] (>=3,!=4.0.0,!=4.0.1)"]
+
+[[package]]
 name = "django-timezone-field"
 version = "7.1"
 description = "A Django app providing DB, form, and REST framework fields for zoneinfo and pytz timezone objects."
@@ -544,6 +562,43 @@ coreapi = ["coreapi (>=2.3.3)", "coreschema (>=0.0.4)"]
 validation = ["swagger-spec-validator (>=2.1.0)"]
 
 [[package]]
+name = "flake8"
+version = "7.2.0"
+description = "the modular source code checker: pep8 pyflakes and co"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "flake8-7.2.0-py2.py3-none-any.whl", hash = "sha256:93b92ba5bdb60754a6da14fa3b93a9361fd00a59632ada61fd7b130436c40343"},
+    {file = "flake8-7.2.0.tar.gz", hash = "sha256:fa558ae3f6f7dbf2b4f22663e5343b6b6023620461f8d4ff2019ef4b5ee70426"},
+]
+
+[package.dependencies]
+mccabe = ">=0.7.0,<0.8.0"
+pycodestyle = ">=2.13.0,<2.14.0"
+pyflakes = ">=3.3.0,<3.4.0"
+
+[[package]]
+name = "gunicorn"
+version = "23.0.0"
+description = "WSGI HTTP Server for UNIX"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "gunicorn-23.0.0-py3-none-any.whl", hash = "sha256:ec400d38950de4dfd418cff8328b2c8faed0edb0d517d3394e457c317908ca4d"},
+    {file = "gunicorn-23.0.0.tar.gz", hash = "sha256:f014447a0101dc57e294f6c18ca6b40227a4c90e9bdb586042628030cba004ec"},
+]
+
+[package.dependencies]
+packaging = "*"
+
+[package.extras]
+eventlet = ["eventlet (>=0.24.1,!=0.36.0)"]
+gevent = ["gevent (>=1.4.0)"]
+setproctitle = ["setproctitle"]
+testing = ["coverage", "eventlet", "gevent", "pytest", "pytest-cov"]
+tornado = ["tornado (>=0.2)"]
+
+[[package]]
 name = "idna"
 version = "3.10"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -566,6 +621,17 @@ python-versions = ">=3.5"
 files = [
     {file = "inflection-0.5.1-py2.py3-none-any.whl", hash = "sha256:f38b2b640938a4f35ade69ac3d053042959b62a0f1076a5bbaa1b9526605a8a2"},
     {file = "inflection-0.5.1.tar.gz", hash = "sha256:1a29730d366e996aaacffb2f1f1cb9593dc38e2ddd30c91250c6dde09ea9b417"},
+]
+
+[[package]]
+name = "iniconfig"
+version = "2.1.0"
+description = "brain-dead simple config-ini parsing"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "iniconfig-2.1.0-py3-none-any.whl", hash = "sha256:9deba5723312380e77435581c6bf4935c94cbfab9b1ed33ef8d238ea168eb760"},
+    {file = "iniconfig-2.1.0.tar.gz", hash = "sha256:3abbd2e30b36733fee78f9c7f7308f2d0050e88f0087fd25c2645f63c773e1c7"},
 ]
 
 [[package]]
@@ -616,6 +682,17 @@ sqlalchemy = ["sqlalchemy (>=1.4.48,<2.1)"]
 sqs = ["boto3 (>=1.26.143)", "urllib3 (>=1.26.16)"]
 yaml = ["PyYAML (>=3.10)"]
 zookeeper = ["kazoo (>=2.8.0)"]
+
+[[package]]
+name = "mccabe"
+version = "0.7.0"
+description = "McCabe checker, plugin for flake8"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "mccabe-0.7.0-py2.py3-none-any.whl", hash = "sha256:6c2d30ab6be0e4a46919781807b4f0d834ebdd6c6e3dca0bda5a15f863427b6e"},
+    {file = "mccabe-0.7.0.tar.gz", hash = "sha256:348e0240c33b60bbdf4e523192ef919f28cb2c3d7d5c7794f74009290f236325"},
+]
 
 [[package]]
 name = "mypy-extensions"
@@ -755,6 +832,21 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=8.3.4)", "pytest-
 type = ["mypy (>=1.14.1)"]
 
 [[package]]
+name = "pluggy"
+version = "1.6.0"
+description = "plugin and hook calling mechanisms for python"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "pluggy-1.6.0-py3-none-any.whl", hash = "sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746"},
+    {file = "pluggy-1.6.0.tar.gz", hash = "sha256:7dcc130b76258d33b90f61b658791dede3486c3e6bfb003ee5c9bfb396dd22f3"},
+]
+
+[package.extras]
+dev = ["pre-commit", "tox"]
+testing = ["coverage", "pytest", "pytest-benchmark"]
+
+[[package]]
 name = "prompt-toolkit"
 version = "3.0.51"
 description = "Library for building powerful interactive command lines in Python"
@@ -845,6 +937,28 @@ files = [
 ]
 
 [[package]]
+name = "pycodestyle"
+version = "2.13.0"
+description = "Python style guide checker"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "pycodestyle-2.13.0-py2.py3-none-any.whl", hash = "sha256:35863c5974a271c7a726ed228a14a4f6daf49df369d8c50cd9a6f58a5e143ba9"},
+    {file = "pycodestyle-2.13.0.tar.gz", hash = "sha256:c8415bf09abe81d9c7f872502a6eee881fbe85d8763dd5b9924bb0a01d67efae"},
+]
+
+[[package]]
+name = "pyflakes"
+version = "3.3.2"
+description = "passive checker of Python programs"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "pyflakes-3.3.2-py2.py3-none-any.whl", hash = "sha256:5039c8339cbb1944045f4ee5466908906180f13cc99cc9949348d10f82a5c32a"},
+    {file = "pyflakes-3.3.2.tar.gz", hash = "sha256:6dfd61d87b97fba5dcfaaf781171ac16be16453be6d816147989e7f6e6a9576b"},
+]
+
+[[package]]
 name = "pyjwt"
 version = "2.9.0"
 description = "JSON Web Token implementation in Python"
@@ -860,6 +974,44 @@ crypto = ["cryptography (>=3.4.0)"]
 dev = ["coverage[toml] (==5.0.4)", "cryptography (>=3.4.0)", "pre-commit", "pytest (>=6.0.0,<7.0.0)", "sphinx", "sphinx-rtd-theme", "zope.interface"]
 docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
 tests = ["coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)"]
+
+[[package]]
+name = "pytest"
+version = "8.3.5"
+description = "pytest: simple powerful testing with Python"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pytest-8.3.5-py3-none-any.whl", hash = "sha256:c69214aa47deac29fad6c2a4f590b9c4a9fdb16a403176fe154b79c0b4d4d820"},
+    {file = "pytest-8.3.5.tar.gz", hash = "sha256:f4efe70cc14e511565ac476b57c279e12a855b11f48f212af1080ef2263d3845"},
+]
+
+[package.dependencies]
+colorama = {version = "*", markers = "sys_platform == \"win32\""}
+iniconfig = "*"
+packaging = "*"
+pluggy = ">=1.5,<2"
+
+[package.extras]
+dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
+
+[[package]]
+name = "pytest-django"
+version = "4.11.1"
+description = "A Django plugin for pytest."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pytest_django-4.11.1-py3-none-any.whl", hash = "sha256:1b63773f648aa3d8541000c26929c1ea63934be1cfa674c76436966d73fe6a10"},
+    {file = "pytest_django-4.11.1.tar.gz", hash = "sha256:a949141a1ee103cb0e7a20f1451d355f83f5e4a5d07bdd4dcfdd1fd0ff227991"},
+]
+
+[package.dependencies]
+pytest = ">=7.0.0"
+
+[package.extras]
+docs = ["sphinx", "sphinx_rtd_theme"]
+testing = ["Django", "django-configurations (>=2.0)"]
 
 [[package]]
 name = "python-crontab"
@@ -1132,4 +1284,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "fb072d6a2b92cce1f4feebfbb93ad664969292840ce2630bb456d1b7ec160730"
+content-hash = "cd98d938a36528099a36aacd0bbd85d753c461d783a2194710a17ef7c58dad45"
