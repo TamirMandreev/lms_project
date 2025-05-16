@@ -23,7 +23,7 @@ jobs:
           poetry install --no-root
 
       - name: Run tests
-        run: python3 manage.py test
+        run: pytest --ds=config.test_settings
 
   build:
     needs: test
